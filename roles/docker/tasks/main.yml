@@ -43,6 +43,17 @@
       - python-setuptools
     state: latest
 
+- name: Remove pip's backports (See https://github.com/docker/docker-py/issues/1502#issuecomment-506544849)
+  pip:
+    name: backports.ssl-match-hostname
+    state: absent
+
+- name: Install debian's backports
+  apt:
+    name:
+      - python-backports.ssl-match-hostname
+    install_recommends: no
+
 - name: Install Docker Compose
   pip:
     name: docker-compose
