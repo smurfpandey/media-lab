@@ -1,0 +1,7 @@
+- name: Install needed packages (see https://www.raspberrypi.org/documentation/configuration/external-storage.md)
+  apt:
+    name:
+      - ntfs-3g
+    allow_unauthenticated: true
+    install_recommends: no
+    state: latest

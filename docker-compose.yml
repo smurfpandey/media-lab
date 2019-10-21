@@ -1,0 +1,4 @@
+control-machine:
+  image: smurfpandey/ansible-cm
+  volumes:
+    - .:/ansible/playbooks

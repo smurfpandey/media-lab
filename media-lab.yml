@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - { role: docker, tags: docker }
+    - { role: 'hdd-setup' }
+
+  tasks:
+  - name: Congratulations!
+    debug:
+      msg:
+        - "Your media-lab is ready now!"
