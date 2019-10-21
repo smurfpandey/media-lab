@@ -4,6 +4,7 @@
   roles:
     - { role: docker, tags: docker }
     - { role: 'hdd-setup' }
+    - { role: 'media-lab' }
 
   tasks:
   - name: Congratulations!

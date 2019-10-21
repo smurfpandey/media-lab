@@ -1,0 +1,12 @@
+
+---
+# tasks file for docker-compose of media-lab
+- name: Create installation dir /opt/media-lab
+  file:
+    path: /opt/media-lab
+    state: directory
+
+- name: Template docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/media-lab/docker-compose.yml
