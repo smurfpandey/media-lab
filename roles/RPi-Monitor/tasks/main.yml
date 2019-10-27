@@ -1,0 +1,29 @@
+- name: Install needed packages (see https://xavierberger.github.io/RPi-Monitor-docs/11_installation.html)
+  apt:
+    name:
+      - dirmngr
+    allow_unauthenticated: true
+    install_recommends: no
+    state: latest
+
+- name: Add RPi-Monitor apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 2C0D3C0F
+
+- name: Add RPi-Monitor into list of repository
+  apt_repository:
+    repo: deb http://giteduberger.fr rpimonitor/
+    state: present
+    filename: rpimonitor
+
+- name: Install RPi-Monitor apt package
+  apt:
+    pkg: rpimonitor
+    allow_unauthenticated: true
+    state: latest
+    update_cache: yes
+    install_recommends: no
+
+- name: Update packages info for RPi-monitor
+  shell: sudo /etc/init.d/rpimonitor update

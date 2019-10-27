@@ -5,6 +5,7 @@
     - { role: docker, tags: docker }
     - { role: 'hdd-setup' }
     - { role: 'media-lab' }
+    - { role: 'RPi-Monitor' }
 
   tasks:
   - name: Congratulations!
