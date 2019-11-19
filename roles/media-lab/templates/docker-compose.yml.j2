@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  jellyfin:
+  jellyfin: # Self hosted netflix
     image: linuxserver/jellyfin:arm32v7-latest
     container_name: jellyfin
     ports:
@@ -15,9 +15,88 @@ services:
       - TZ=Asia/Kolkata
       - UMASK_SET=022 #optional
     volumes:
-      - /mnt/mediahub/jellyfin-config:/config
+      - /mnt/mediahub/apps/jellyfin:/config
       - /mnt/mediahub/Series:/data/tvshows
       - /mnt/mediahub/Movies:/data/movies
       - /mnt/mediahub/Music/Video:/data/music-videos
     restart: always
     network_mode: host #For UPnP to work
+
+  radarr: # download movie when they are available in the quality you want
+    image: linuxserver/radarr:arm32v7-latest
+    container_name: radarr
+    ports:
+      - "7878:7878/tcp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/mediahub/apps/radarr:/config
+      - /mnt/mediahub/Movies:/movies
+      - /mnt/mediahub/Downloads/complete:/downloads
+    restart: always
+
+  sonarr: # download movie when they are available in the quality you want
+    image: linuxserver/sonarr:arm32v7-latest
+    container_name: sonarr
+    ports:
+      - "8989:8989/tcp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/mediahub/apps/sonarr:/config
+      - /mnt/mediahub/Series:/tvshows
+      - /mnt/mediahub/Downloads/complete:/downloads
+    restart: always
+
+  transmission: # torrent downloader client
+    image: linuxserver/transmission:arm32v7-latest
+    container_name: transmission
+    ports:
+      - "9091:9091/tcp"
+      - "51413:51413/tcp"
+      - "51413:51413/udp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/mediahub/apps/transmission:/config
+      - /mnt/mediahub/Downloads:/downloads
+    restart: always
+
+  jackett: # torrent downloader client
+    image: linuxserver/jackett:arm32v7-latest
+    container_name: jackett
+    ports:
+      - "9117:9117/tcp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - UMASK_SET=022 #optional
+    volumes:
+      - /mnt/mediahub/apps/jackett:/config
+      - /mnt/mediahub/Downloads:/downloads
+    restart: always
+
+  nextcloud: # Self hosted Cloud
+    image: arm32v7/nextcloud
+    container_name: nextcloud
+    ports:
+      - "8097:80/tcp"
+    labels:
+      traefik.enabled: false
+    environment:
+      - TZ=Asia/Kolkata
+      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.home.smurfpandey.me
+    volumes:
+      - /mnt/mediahub/apps/nextcloud:/var/www/html/config
+      - /mnt/mediahub/local-cloud:/var/www/html/data
+    restart: always

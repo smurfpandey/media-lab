@@ -10,3 +10,4 @@
   template:
     src: docker-compose.yml.j2
     dest: /opt/media-lab/docker-compose.yml
+
