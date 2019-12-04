@@ -100,3 +100,18 @@ services:
       - /mnt/mediahub/apps/nextcloud:/var/www/html/config
       - /mnt/mediahub/local-cloud:/var/www/html/data
     restart: always
+
+  airsonic:
+    image: linuxserver/airsonic
+    container_name: airsonic
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - JAVA_OPTS=-Dserver.use-forward-headers=true
+    volumes:
+      - /mnt/mediahub/apps/airsonic:/config
+      - /mnt/mediahub/Music/Audio:/music
+    ports:
+      - 4040:4040
+    restart: unless-stopped

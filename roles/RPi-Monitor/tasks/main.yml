@@ -13,7 +13,7 @@
 
 - name: Add RPi-Monitor into list of repository
   apt_repository:
-    repo: deb http://giteduberger.fr rpimonitor/
+    repo: deb https://www.giteduberger.fr rpimonitor/
     state: present
     filename: rpimonitor
 
