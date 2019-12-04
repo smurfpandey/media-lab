@@ -1,0 +1,17 @@
+---
+- name: Install required packages
+  apt:
+    name:
+      - rpcbind
+      - nfs-kernel-server
+    state: present
+  become: yes
+
+- name: Copy /etc/exports
+  copy:
+    src: exports
+    dest: /etc/exports
+  notify:
+    - restart rpcbind
+    - restart nfs-kernel-server
+  become: yes
