@@ -6,6 +6,7 @@
     - { role: 'hdd-setup' }
     - { role: 'media-lab' }
     - { role: 'RPi-Monitor' }
+    - { role: 'nfs-server' }
 
   tasks:
   - name: Congratulations!
